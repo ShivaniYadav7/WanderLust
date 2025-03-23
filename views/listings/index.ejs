@@ -1,25 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WanderLust</title>
-  </head>
-  <body>
-    <h3>All Listings</h3>
-    <form method="GET" action="/listing/new">
-      <button>Create New Listing</button>
-    </form>
-    <ul>
-      <% for(let listing of allListings) { %>
-      <li>
-        <a href="/listings/<%= listing._id %>"><%= listing.title %> </a>
-        <!-- Add the Edit link here -->
-        <a href="/listings/<%= listing._id %>/edit">Edit</a>
-      </li>
-      <% } %>
-    </ul>
-  </body>
-</html>
+<%- layout("/layouts/boilerplate") %>
+<body>
+  <h3>All listings</h3>
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+    <% for(let listing of allListings){ %>
+      <a href="/listings/<%= listing._id %>" class = "listing-link">
+    <div class="card col" ">
+      <img src="<%= listing.image.filename %>" class="card-img-top" alt="listing_image" style = "height: 50rem"/>
+      <div class="card-img-overlay">abcd</div>
 
-<ul></ul>
+      <div class="card-body">
+        <p class="card-text">
+          <%= listing.title %><br />
+          <%= listing.price.toLocaleString("en-IN") %> /night
+        </p>
+      </div>
+    </div>
+    <% } %>
+  </div>
+
+  <!-- <% for (let listings of allListings) { %>
+    <a href="/listings/<%= listings._id %>"> <%=listings.title%> </a>
+    <br />
+    <% } %>
+  </body>
+</html> -->
+</body>

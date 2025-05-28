@@ -1,27 +1,41 @@
+
+
+const express = require("express");
+const app = express();
 const mongoose = require("mongoose");
-const initData = require("./data.js");
-const Listing = require("../models/listing.js");
+const Listing = require("./models/listing.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-
 main()
- .then(() => {
+  .then(() => {
     console.log("connected to DB");
- })
- .catch((err) => {
+  })
+  .catch((err) => {
     console.log(err);
- });
+  });
 
- async function main(){
-    await mongoose.connect(MONGO_URL);
-    console.log("Connected to DB");
+async function main() {
+  await mongoose.connect(MONGO_URL);
+}
 
- }
+app.get("/", (req, res) => {
+  res.send("Hi, I am root");
+});
 
- const initDB = async() => {
-    await Listing.deleteMany({});
-    await Listing.insertMany(initData.data);
-    console.log("data was initialized")
- }
+app.get("/testListing", async (req, res) => {
+  let sampleListing = new Listing({
+    title: "My New Villa",
+    description: "By the beach",
+    price: 1200,
+    location: "Calangute, Goa",
+    country: "India",
+  });
 
- initDB();
+  await sampleListing.save();
+  console.log("Sample was saved");
+  res.send("Successful testing");
+});
+
+app.listen(8080, () => {
+  console.log("Server is listening on port 8080");
+});

@@ -1,0 +1,46 @@
+<body>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-8 offset-2">
+        <h3>Listing Details:</h3>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="card col-6 offset-2 show-card p-0">
+        <img
+          src="<%= listing.image && listing.image.url ? listing.image.url : 'https://source.unsplash.com/collection/483251' %>"
+          class="card-img-top"
+          alt="listing_image"
+          onerror="this.src='https://source.unsplash.com/collection/483251';"
+          style="height: 20rem; object-fit: cover"
+        />
+        <div class="card-body">
+          <p class="card-text">
+            <b><%= listing.title %></b><br />
+            <%= listing.description %><br />
+            &#8377;<%= listing.price.toLocaleString('en-IN') %><br />
+            <%= listing.location %><br />
+            <%= listing.country %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="btns row mt-3">
+      <div class="col-6 offset-2 d-flex justify-content-start gap-3">
+        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark">
+          Edit
+        </a>
+
+        <form
+          method="POST"
+          action="/listings/<%= listing._id %>?_method=DELETE"
+          onsubmit="return confirm('Are you sure you want to delete this listing?');"
+        >
+          <button type="submit" class="btn btn-dark">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>

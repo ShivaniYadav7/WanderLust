@@ -1,0 +1,30 @@
+<h3>All Listings</h3>
+<div class="mb-3">
+  <a href="/listings/new" class="btn btn-primary">Add New Listing</a>
+</div>
+<% if (allListings.length === 0) { %>
+<p>No listings found.</p>
+<% } else { %>
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+  <% for(let listing of allListings) { %>
+  <a href="/listings/<%= listing._id %>" class="listing-link">
+    <div class="card col">
+      <img
+        src="<%= listing.image && listing.image.url ? listing.image.url : 'https://source.unsplash.com/collection/483251' %>"
+        class="card-img-top"
+        alt="listing_image"
+        style="height: 20rem"
+        onerror="this.src='https://source.unsplash.com/collection/483251';"
+      />
+      <div class="card-img-overlay"></div>
+      <div class="card-body">
+        <p class="card-text">
+          <b><%= listing.title %></b><br />
+          <%= listing.price.toLocaleString("en-IN") %> /night
+        </p>
+      </div>
+    </div>
+  </a>
+  <% } %>
+</div>
+<% } %>

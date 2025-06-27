@@ -3,7 +3,7 @@ const app = express();
 const methodOverride = require('method-override');
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require("mongoose");
-const path = require("path"); // 🟢 Move path before usage
+const path = require("path"); //  Move path before usage
 const Listing = require("./models/listing");
 
 // Database URL
@@ -11,8 +11,8 @@ const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
 // Connect to MongoDB
 main()
-  .then(() => console.log("✅ Connected to DB"))
-  .catch(err => console.log("❌ DB Connection Error:", err));
+  .then(() => console.log(" Connected to DB"))
+  .catch(err => console.log(" DB Connection Error:", err));
 
 async function main() {
   await mongoose.connect(MONGO_URL);
@@ -27,7 +27,7 @@ app.set('layout', 'layouts/boilerplate');
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "public"))); // 🟢 Must be after path and before routes
+app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
 app.get("/", (req, res) => {
@@ -49,7 +49,7 @@ app.get("/listings/new", (req, res) => {
 app.get("/listings/:id", async (req, res) => {
   const { id } = req.params;
   const listing = await Listing.findById(id);
-  res.render("listings/show", { listing }); // 🟢 Removed .ejs
+  res.render("listings/show", { listing }); //  Removed .ejs
 });
 
 // Create Listing

@@ -1,24 +1,34 @@
-const mongoose = require("mongoose");
-const initData = require("./data.js");
-const Listing = require("../models/listing.js");
+// init/index.js
+require('dotenv').config();
+const mongoose = require('mongoose');
+const Listing = require('../models/listing');
+const { data } = require('./data');
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const seedDB = async () => {
+  try {
+    await mongoose.connect(process.env.ATLASDB_URL);
+    console.log('DB Connected for seeding!');
 
-main().then(() => {
-    console.log("connected to DB");
-})
-.catch((err) => {
-    console.log(err);
-});
-
-async function main() {
-    await mongoose.connect(MONGO_URL);
-}
-
-const initDB = async () => {
+    // Clear existing data
     await Listing.deleteMany({});
-    await Listing.insertMany(initData.data);
-    console.log("data was initialized");
+    console.log('Cleared existing listings');
+
+    // Add owner reference if needed
+    const ownerId = '65faaae8d351653782e5a739'; // Replace with actual user ID
+    
+    const listings = data.map(listing => ({
+      ...listing,
+      owner: ownerId
+    }));
+
+    await Listing.insertMany(listings);
+    console.log(`Added ${listings.length} listings`);
+
+    process.exit(0);
+  } catch (err) {
+    console.error('Seeding failed:', err);
+    process.exit(1);
+  }
 };
 
-initDB();
+seedDB();

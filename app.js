@@ -1,4 +1,4 @@
-require('d otenv').config();
+require('dotenv').config();
 
 // Importing required Node.js modules and custom files
 const express = require('express');
